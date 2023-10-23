@@ -1,0 +1,100 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.user-table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+.img-style{
+width: 50%;
+height: 100px;
+object-fit: cover;
+border-radius: 5px;}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr auto;
+  grid-template-rows: auto;
+  gap: 0.2em;
+  align-items: center;
+  padding: 0.2em;
+  border: 1px dashed black;
+}
+
+.header-checkbox {
+  grid-column: 1;
+}
+
+.header-name {
+  grid-column: 2;
+}
+
+.header-quantity {
+  grid-column: 3;
+}
+
+.header-image {
+  grid-column: 4;
+}
+
+.header-button {
+  grid-column: 5;
+}
+
+.checkbox {
+  grid-column: 1;
+}
+
+.name {
+  grid-column: 2;
+}
+
+.quantity {
+  grid-column: 3;
+}
+
+.image {
+  grid-column: 4;
+}
+
+.button {
+  grid-column: 5;
+}
