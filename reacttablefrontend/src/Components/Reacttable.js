@@ -26,7 +26,10 @@ class Product extends Component {
   }
   componentDidMount() {
     this.getShipments();
-    this.Deletedata();
+    // this.Deletedata();
+  }
+  componentDidUpdate(){
+    this.getShipments();
   }
 
   Deletedata = async (Id) => {
