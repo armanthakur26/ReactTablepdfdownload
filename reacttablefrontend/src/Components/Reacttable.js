@@ -26,10 +26,8 @@ class Product extends Component {
   }
   componentDidMount() {
     this.getShipments();
+  
     // this.Deletedata();
-  }
-  componentDidUpdate(){
-    this.getShipments();
   }
 
   Deletedata = async (Id) => {
@@ -79,7 +77,7 @@ class Product extends Component {
         image,
       });
       this.setState((prevState) => ({
-        Shipments: prevState.Shipments.map((shipment) => {
+        filter: prevState.Shipments.map((shipment) => {
           if (shipment.id === id) {
             return { ...shipment, name, quantity,image };
           } else {
@@ -101,6 +99,10 @@ class Product extends Component {
   adddata=()=>{
     this.setState({
         isadd: true,
+        newShipment: {
+          name: "",
+          quantity: 0,
+          image: null, },
       });
   }
   addInput = (e) => {
@@ -115,29 +117,32 @@ class Product extends Component {
          search: { ...prevdata.search, [name]: value },
         }));
       };
- handleSubmit = async (e) => {
-    e.preventDefault();
-    const { name, quantity, image } = this.state.newShipment;
-    if (name.length === 0) {
-      alert("Please Enter Name");
-    }
-    if (!image) {
-      alert("Please Select Image");
-    }
-    try {
-      const response = await axios.post("https://localhost:7225/api/Shipment", {
-        name,
-        quantity,
-        image,
-      });
-      this.setState((prevState) => ({
-        Shipments: [...prevState.Shipments, response.data],
-       isadd:false,
-      }));
-    }catch (error) {
-      console.error("something wrong to  add shipment:", error);
-    }
-  };
+      handleSubmit = async (e) => {
+        e.preventDefault(); 
+      
+        const { name, quantity, image } = this.state.newShipment;
+        if (name.length === 0) {
+          alert("Please Enter Name");
+        }
+        if (!image) {
+          alert("Please Select Image");
+        }
+        try {
+          const response = await axios.post("https://localhost:7225/api/Shipment", {
+            name,
+            quantity,
+            image,
+          });
+          this.setState((prevState) => ({
+            Shipments: [...prevState.Shipments, response.data],
+            filter: [...prevState.filter, response.data],
+            isadd: false,
+          }));
+        } catch (error) {
+          console.error("something wrong to add shipment:", error);
+        }
+      };
+      
   handleAddImageChange = (event) => {
     const imageFile = event.target.files[0];
     const reader = new FileReader();
