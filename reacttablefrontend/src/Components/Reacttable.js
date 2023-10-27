@@ -22,12 +22,12 @@ class Product extends Component {
       },
             search: '',
             filter: [],
+            selectedIds: [],
+            
     };
   }
   componentDidMount() {
     this.getShipments();
-  
-    // this.Deletedata();
   }
 
   Deletedata = async (Id) => {
@@ -161,7 +161,23 @@ class Product extends Component {
             return e.name.toLowerCase().includes(search.toLowerCase());
         });
         this.setState({ search, filter: result });
-    }              
+    }    
+    handleDeleteSelected = async () => {
+      const { selectedIds } = this.state;
+      try {
+       
+        for (const id of selectedIds) {
+          await axios.delete(`https://localhost:7225/api/Shipment?id=${id}`);
+        }
+        this.setState((prevState) => ({
+          Shipments: prevState.Shipments.filter((shipment) => !selectedIds.includes(shipment.id)),
+          filter: prevState.filter.filter((shipment) => !selectedIds.includes(shipment.id)),
+          selectedIds: [],
+        }));
+      } catch (error) {
+        console.error("Error deleting shipments:", error);
+      }
+    };          
   render() {
     const columns = [
       {
@@ -269,13 +285,18 @@ class Product extends Component {
           data={this.state.filter}
           pagination
           selectableRows
+          onSelectedRowsChange={({ selectedRows }) => {
+            const selectedIds = selectedRows.map((row) => row.id);
+            this.setState({ selectedIds });
+          }}
           highlightOnHover
           fixedHeader
           defaultSortFieldId={1}
           actions   
           contextActions={<div>
             <button> Edit</button>&nbsp;
-            <button >Delete</button>
+            <button onClick={this.handleDeleteSelected}>Delete</button>
+
             </div>
           }
           expandableRows
